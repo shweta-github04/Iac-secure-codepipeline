@@ -29,14 +29,25 @@ data "aws_ami" "ubuntu" {
 resource "aws_instance" "web" {
   ami           = data.aws_ami.ubuntu.id
   ebs_optimized     = true
-  mointoring       = true
-  Encryption       = true
+  Monitoring       = true
   instance_type = "t3.micro"
   
   metadata_options {
      http_endpoint = "enabled"
      http_tokens   = "required"
  }
+  
+  root_block_device {
+        delete_on_termination = true
+        device_name           = "/dev/sda1"
+        encrypted             = false
+        iops                  = 0
+        tags                  = {}
+        throughput            = 0
+        volume_id             = "vol-031d56cc45ea4a245"
+        volume_size           = 8
+        volume_type           = "standard"  
+  }
 
   tags = {
     Name = "HelloWorld"
