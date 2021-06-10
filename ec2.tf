@@ -29,6 +29,8 @@ data "aws_ami" "ubuntu" {
 resource "aws_instance" "web" {
   ami           = data.aws_ami.ubuntu.id
   ebs_optimized     = true
+  mointoring       = true
+  Encryption       = true
   instance_type = "t3.micro"
   
   metadata_options {
@@ -41,6 +43,3 @@ resource "aws_instance" "web" {
   }
 }
 
-resource "aws_ebs_encryption_by_default" "example" {
-  enabled = true
-}
