@@ -17,6 +17,7 @@ resource "aws_s3_bucket" "test-tf-enc" {
   logging {
   target_bucket = aws_s3_bucket.log_bucket.id
   target_prefix = "log/"
+ }  
   
   server_side_encryption_configuration {
     rule {
