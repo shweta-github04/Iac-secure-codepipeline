@@ -5,6 +5,11 @@ provider "aws" {
 }
 
 #................latest ubuntu AMI.............
+resource "aws_s3_account_public_access_block" "example" {
+  block_public_acls   = true
+  block_public_policy = true
+}
+
 resource "aws_s3_bucket" "log_bucket" {
   bucket = "my-tf-log-bucket"
   acl    = "log-delivery-write"
