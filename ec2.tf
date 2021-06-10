@@ -6,32 +6,19 @@ provider "aws" {
 
 #................latest ubuntu AMI.............
 
-resource "aws_s3_bucket" "log_bucket" {
-  bucket = "my-tf-log-bucket"
-  acl    = "log-delivery-write"
-}
-
-resource "aws_s3_bucket" "b" {
-  bucket = "my-tf-test-bucket"
+resource "aws_s3_bucket" "test-tf-enc" {
+  bucket = "test-tf-enc"
   acl    = "private"
 
-  logging {
-    target_bucket = aws_s3_bucket.log_bucket.id
-    target_prefix = "log/"
+  tags {
+    Name = "test-tf-enc"
   }
-}
 
-resource "aws_s3_bucket_object" "examplebucket_object1" {
-  key                    = "someobject"
-  bucket                 = aws_s3_bucket.b.id
-  source                 = "index.html"
-  server_side_encryption = "AES256"
-}
-
-
-resource "aws_s3_bucket_object" "examplebucket_object2" {
-  key                    = "someobject"
-  bucket                 = aws_s3_bucket.log_bucket.id
-  source                 = "index.html"
-  server_side_encryption = "AES256"
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        sse_algorithm = "AES256"
+      }
+    }
+  }
 }
