@@ -21,6 +21,10 @@ resource "aws_s3_bucket" "log_bucket" {
 resource "aws_s3_bucket" "test-tf-enc" {
   bucket = "test-tf-enc"
   acl    = "private"
+  
+  versioning {
+  enabled = "true"
+ }
 
   logging {
   target_bucket = aws_s3_bucket.log_bucket.id
