@@ -25,7 +25,7 @@ pipeline {
                 when { expression { return params.Terraform == 'Apply'} }
                 steps {
                     sh 'sudo docker container run -t --rm -v $(pwd):/data wata727/tflint',
-                    sh 'tflint'
+                       'tflint'
                 }
             }
             stage('tf sec') {
