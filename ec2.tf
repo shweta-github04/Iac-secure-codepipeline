@@ -28,7 +28,12 @@ data "aws_ami" "ubuntu" {
 
 resource "aws_instance" "web" {
   ami           = data.aws_ami.ubuntu.id
+  ebs_optimized     = true
   instance_type = "t3.micro"
+  
+  metadata_options {
+     http_endpoint = "enabled"
+     http_tokens   = "required"
 
   tags = {
     Name = "HelloWorld"
