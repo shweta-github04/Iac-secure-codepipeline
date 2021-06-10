@@ -21,7 +21,7 @@ resource "aws_s3_bucket" "b" {
   }
 }
 
-resource "aws_s3_bucket_object1" "examplebucket_object1" {
+resource "aws_s3_bucket_object" "examplebucket_object1" {
   key                    = "someobject"
   bucket                 = aws_s3_bucket.b.id
   source                 = "index.html"
@@ -29,7 +29,7 @@ resource "aws_s3_bucket_object1" "examplebucket_object1" {
 }
 
 
-resource "aws_s3_bucket_object2" "examplebucket_object2" {
+resource "aws_s3_bucket_object" "examplebucket_object2" {
   key                    = "someobject"
   bucket                 = aws_s3_bucket.log_bucket.id
   source                 = "index.html"
