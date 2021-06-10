@@ -5,43 +5,33 @@ provider "aws" {
 }
 
 #................latest ubuntu AMI.............
-resource "aws_s3_account_public_access_block" "example" {
-  block_public_acls   = true
-  block_public_policy = true
+
+ #................latest ubuntu AMI.............
+
+data "aws_ami" "ubuntu" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  owners = ["099720109477"] # Canonical
 }
 
-resource "aws_s3_bucket" "log_bucket" {
-  bucket = "my-tf-log-bucket"
-  acl    = "log-delivery-write"
-  
-  server_side_encryption_configuration {
-    rule {
-      apply_server_side_encryption_by_default {
-        sse_algorithm = "AES256"
-      }
-    }
-  } 
-}
+#.............ubuntu server.................
 
-resource "aws_s3_bucket" "test-tf-enc" {
-  bucket = "test-tf-enc"
-  acl    = "private"
-  
-  versioning {
-  enabled = "true"
- }
+resource "aws_instance" "web" {
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = "t3.micro"
 
-  logging {
-  target_bucket = aws_s3_bucket.log_bucket.id
-  target_prefix = "log/"
- }  
-  
-  server_side_encryption_configuration {
-    rule {
-      apply_server_side_encryption_by_default {
-        sse_algorithm = "AES256"
-      }
-    }
+  tags = {
+    Name = "HelloWorld"
   }
 }
 
