@@ -27,3 +27,11 @@ resource "aws_s3_bucket_object" "examplebucket_object" {
   source                 = "index.html"
   server_side_encryption = "AES256"
 }
+
+
+resource "aws_s3_bucket_object" "examplebucket_object" {
+  key                    = "someobject"
+  bucket                 = aws_s3_bucket.log_bucket.id
+  source                 = "index.html"
+  server_side_encryption = "AES256"
+}
