@@ -10,9 +10,6 @@ resource "aws_s3_bucket" "test-tf-enc" {
   bucket = "test-tf-enc"
   acl    = "private"
 
-  tags {
-    Name = "test-tf-enc"
-  }
 
   server_side_encryption_configuration {
     rule {
