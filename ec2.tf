@@ -34,6 +34,7 @@ resource "aws_instance" "web" {
   metadata_options {
      http_endpoint = "enabled"
      http_tokens   = "required"
+ }
 
   tags = {
     Name = "HelloWorld"
