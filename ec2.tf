@@ -27,10 +27,10 @@ data "aws_ami" "ubuntu" {
 #.............ubuntu server.................
 
 resource "aws_instance" "web" {
-  ami           = data.aws_ami.ubuntu.id
+  ami               = data.aws_ami.ubuntu.id
   ebs_optimized     = true
-  Monitoring       = true
-  instance_type = "t3.micro"
+  monitoring        = true
+  instance_type     = "t3.micro"
   
   metadata_options {
      http_endpoint = "enabled"
