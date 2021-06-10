@@ -8,7 +8,7 @@ provider "aws" {
 
 resource "aws_s3_bucket" "b" {
   bucket = "192.16.134.22."
-  acl    = "private"
+  acl    = "none"
 
   tags = {
     Name        = "My bucket"
