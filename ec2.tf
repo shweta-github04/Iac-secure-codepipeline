@@ -40,11 +40,7 @@ resource "aws_instance" "web" {
   root_block_device {
         delete_on_termination = true
         device_name           = "/dev/sda1"
-        encrypted             = false
-        iops                  = 0
-        tags                  = {}
-        throughput            = 0
-        volume_id             = "vol-031d56cc45ea4a245"
+        encrypted             = true
         volume_size           = 8
         volume_type           = "standard"  
   }
