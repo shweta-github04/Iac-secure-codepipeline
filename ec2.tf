@@ -7,7 +7,7 @@ provider "aws" {
 #................latest ubuntu AMI.............
 
 resource "aws_s3_bucket" "b" {
-  bucket = "11111"
+  bucket = "ABCTAFGG"
   acl    = "private"
 
   tags = {
