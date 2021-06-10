@@ -7,7 +7,7 @@ provider "aws" {
 #................latest ubuntu AMI.............
 
 resource "aws_s3_bucket" "b" {
-  bucket = "my-tf-test-bucket"
+  bucket = "11111"
   acl    = "private"
 
   tags = {
