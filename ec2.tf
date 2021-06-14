@@ -1,54 +1,40 @@
-#............. Provider.................
-
-provider "aws" {
-  region  = "us-east-1"
-}
-
-#................latest ubuntu AMI.............
-
- #................latest ubuntu AMI.............
-
-data "aws_ami" "ubuntu" {
-  most_recent = true
-
-  filter {
-    name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  owners = ["099720109477"] # Canonical
-}
-
-#.............ubuntu server.................
-
-resource "aws_instance" "web" {
-  ami               = data.aws_ami.ubuntu.id
-  ebs_optimized     = true
-  monitoring        = true
-  instance_type     = "t3.micro"
-  vpc_security_group_ids = ["sg-011098e96f63a103d"]
-  
- 
-  
-  metadata_options {
-     http_endpoint = "enabled"
-     http_tokens   = "required"
- }
-  
-  root_block_device {
-        delete_on_termination = true
-        encrypted             = true
-        volume_size           = 8
-        volume_type           = "standard"  
-  }
+resource "aws_vpc" "my_vpc" {
+  cidr_block = "172.16.0.0/16"
 
   tags = {
-    Name = "HelloWorld"
+    Name = "tf-example"
   }
 }
 
+resource "aws_subnet" "my_subnet" {
+  vpc_id            = aws_vpc.my_vpc.id
+  cidr_block        = "172.16.10.0/24"
+  availability_zone = "us-west-2a"
+
+  tags = {
+    Name = "tf-example"
+  }
+}
+
+resource "aws_network_interface" "network_interface_ok" {
+  subnet_id   = aws_subnet.my_subnet.id
+  private_ips = ["172.16.10.100"]
+
+  tags = {
+    Name = "primary_network_interface"
+  }
+}
+
+resource "aws_instance" "foo" {
+  ami           = "ami-005e54dee72cc1d00" # us-west-2
+  instance_type = "t2.micro"
+
+  network_interface {
+    network_interface_id = aws_network_interface.network_interface_ok.id
+    device_index         = 0
+  }
+
+  credit_specification {
+    cpu_credits = "unlimited"
+  }
+}
