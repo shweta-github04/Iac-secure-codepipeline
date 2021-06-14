@@ -38,8 +38,27 @@ resource "aws_network_interface" "network_interface_ok" {
   }
 }
 
+#...........Ec2 server.............
+
+data "aws_ami" "ubuntu" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  owners = ["099720109477"] # Canonical
+}
+
+
 resource "aws_instance" "foo" {
-  ami           = "ami-005e54dee72cc1d00" # us-west-2
+  ami               = data.aws_ami.ubuntu.id
   ebs_optimized     = true
   monitoring        = true
   instance_type = "t2.micro"
