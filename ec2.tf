@@ -33,7 +33,6 @@ resource "aws_instance" "web" {
   instance_type     = "t3.micro"
   vpc_security_group_ids = ["sg-0676242cf7930910d"]
   subnet_id              = "subnet-053cc94194e1b9125"
-  }
   
   metadata_options {
      http_endpoint = "enabled"
