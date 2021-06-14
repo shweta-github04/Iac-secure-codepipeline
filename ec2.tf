@@ -105,10 +105,27 @@ resource "aws_iam_role_policy" "log_policy" {
   policy = data.template_file.log_policy.rendered
 }
 
+
 resource "aws_kms_key" "a" {
-  description             = "KMS key 1"
+  description             = "test"
+  key_usage               = "ENCRYPT_DECRYPT"
   deletion_window_in_days = 10
-  enable_key_rotation    = true
+  is_enabled              = true
+  enable_key_rotation     = true
+
+  tags = merge(
+    {
+      Description   = "'test"
+      Environment   = "test"
+      Name          = "test"
+      ManagedBy     = "terraform"
+    },
+  )
+}
+
+resource "aws_kms_alias" "key_alias" {
+  name          = "alias/test"
+  target_key_id = aws_kms_key.a.id
 }
 
 resource "aws_cloudwatch_log_group" "flow_log_group" {
