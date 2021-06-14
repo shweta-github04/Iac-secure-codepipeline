@@ -61,7 +61,7 @@ resource "aws_instance" "web" {
   monitoring        = true
   instance_type     = "t3.micro"
   network_interface {
-    network_interface_id = aws_network_interface.network_interface_ok.id
+    network_interface_id = "subnet-053cc94194e1b9125"
     device_index         = 0
   }
   
