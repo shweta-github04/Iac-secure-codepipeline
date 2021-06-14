@@ -24,6 +24,11 @@ resource "aws_subnet" "my_subnet" {
   }
 }
 
+resource "aws_network_acl" "acl_ok" {
+  vpc_id = aws_vpc.ok_vpc.id
+  subnet_ids = [aws_subnet.main.id]
+}
+
 resource "aws_network_interface" "network_interface_ok" {
   subnet_id   = aws_subnet.my_subnet.id
   private_ips = ["172.16.10.100"]
@@ -35,6 +40,8 @@ resource "aws_network_interface" "network_interface_ok" {
 
 resource "aws_instance" "foo" {
   ami           = "ami-005e54dee72cc1d00" # us-west-2
+  ebs_optimized     = true
+  monitoring        = true
   instance_type = "t2.micro"
 
   network_interface {
@@ -45,4 +52,16 @@ resource "aws_instance" "foo" {
   credit_specification {
     cpu_credits = "unlimited"
   }
+  metadata_options {
+     http_endpoint = "enabled"
+     http_tokens   = "required"
+ }
+  
+  root_block_device {
+        delete_on_termination = true
+        encrypted             = true
+        volume_size           = 8
+        volume_type           = "standard"  
+  }
+
 }
