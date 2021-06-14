@@ -112,15 +112,6 @@ resource "aws_kms_key" "a" {
   deletion_window_in_days = 10
   is_enabled              = true
   enable_key_rotation     = true
-
-  tags = merge(
-    {
-      Description   = "'test"
-      Environment   = "test"
-      Name          = "test"
-      ManagedBy     = "terraform"
-    },
-  )
 }
 
 resource "aws_kms_alias" "key_alias" {
