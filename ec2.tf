@@ -31,7 +31,7 @@ resource "aws_instance" "web" {
   ebs_optimized     = true
   monitoring        = true
   instance_type     = "t3.micro"
-  vpc_security_group_ids = ["sg-0676242cf7930910d"]
+  vpc_security_group_ids = ["sg-011098e96f63a103d"]
   
  
   
