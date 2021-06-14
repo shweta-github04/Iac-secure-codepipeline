@@ -31,6 +31,7 @@ resource "aws_instance" "web" {
   ebs_optimized     = true
   monitoring        = true
   instance_type     = "t3.micro"
+  subnet_id         = "subnet-053cc94194e1b9125"
   
   metadata_options {
      http_endpoint = "enabled"
