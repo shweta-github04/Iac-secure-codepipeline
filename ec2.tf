@@ -108,7 +108,6 @@ resource "aws_iam_role_policy" "log_policy" {
 resource "aws_cloudwatch_log_group" "flow_log_group" {
   name = "test"
   retention_in_days = 90
-  kms_key_id = "arn:aws:kms:us-east-1:384245390539:key/e50df23f-e222-4a4f-a006-6bca774324ef"
 }
 
 resource "aws_default_security_group" "default" {
