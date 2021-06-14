@@ -82,7 +82,7 @@ resource "aws_iam_role" "iam_log_role" {
 
 resource "aws_iam_role_policy" "log_policy" {
   name = "test"
-  role = "${aws_iam_role.iam_log_role.id}"
+  role = aws_iam_role.iam_log_role.id
   policy = data.template_file.log_policy.rendered
 }
 
@@ -92,7 +92,7 @@ resource "aws_cloudwatch_log_group" "flow_log_group" {
 }
 
 resource "aws_flow_log" "vpc_flow_log" {
-  log_group_name = ws_cloudwatch_log_group.flow_log_group.name
+  log_group_name = aws_cloudwatch_log_group.flow_log_group.name
   iam_role_arn   = aws_iam_role.iam_log_role.arn
   vpc_id         = aws_vpc.my_vpc.id
   traffic_type   = "ALL"
