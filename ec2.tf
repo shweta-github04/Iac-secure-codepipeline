@@ -68,11 +68,11 @@ resource "aws_instance" "foo" {
 #......VPC FLOW LOG..........#
 
 data "template_file" "assume_role_policy" {
-  template = "${file("${path.module}/assume_role_policy.json")}"
+  template = file("${path.module}/assume_role_policy.json")
 }
 
 data "template_file" "log_policy" {
-  template = "${file("${path.module}/log_policy.json")}"
+  template = file("${path.module}/log_policy.json")
 }
 
 resource "aws_iam_role" "iam_log_role" {
