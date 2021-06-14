@@ -25,7 +25,7 @@ resource "aws_subnet" "my_subnet" {
 }
 
 resource "aws_network_acl" "acl_ok" {
-  vpc_id = aws_vpc.ok_vpc.id
+  vpc_id = aws_vpc.my_vpc.id
   subnet_ids = [aws_subnet.main.id]
 }
 
