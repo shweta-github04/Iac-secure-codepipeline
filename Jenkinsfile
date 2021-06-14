@@ -30,7 +30,7 @@ pipeline {
             stage('tf sec') {
                 when { expression { return params.Terraform == 'Apply'} }
                 steps {
-                    sh  "echo "sudo docker container run -t --rm -v "$(pwd):/src" liamg/tfsec /src""
+                    sh 'echo "sudo docker container run -t --rm -v "$(pwd):/src" liamg/tfsec /src"'
                 }
             }
             stage('tf checkov') {
