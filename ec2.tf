@@ -86,9 +86,15 @@ resource "aws_iam_role_policy" "log_policy" {
   policy = data.template_file.log_policy.rendered
 }
 
+resource "aws_kms_key" "a" {
+  description             = "KMS key 1"
+  deletion_window_in_days = 10
+}
 
 resource "aws_cloudwatch_log_group" "flow_log_group" {
   name = "test"
+  retention_in_day = 90
+  kms_key_id = aws_kms_key.a.id
 }
 
 resource "aws_flow_log" "vpc_flow_log" {
