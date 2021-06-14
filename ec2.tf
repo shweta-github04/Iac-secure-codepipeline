@@ -65,3 +65,34 @@ resource "aws_instance" "foo" {
   }
 
 }
+#......VPC FLOW LOG..........#
+
+data "template_file" "assume_role_policy" {
+  template = "${file("${path.module}/assume_role_policy.json")}"
+}
+
+data "template_file" "log_policy" {
+  template = "${file("${path.module}/log_policy.json")}"
+}
+
+resource "aws_iam_role" "iam_log_role" {
+  name = "test"
+  assume_role_policy = "${data.template_file.assume_role_policy.rendered}"
+}
+
+resource "aws_iam_role_policy" "log_policy" {
+  name = "test"
+  role = "${aws_iam_role.iam_log_role.id}"
+  policy = "${data.template_file.log_policy.rendered}"
+}
+
+
+resource "aws_cloudwatch_log_group" "flow_log_group" {
+  name = "test"
+}
+
+resource "aws_flow_log" "vpc_flow_log" {
+  log_group_name = "${aws_cloudwatch_log_group.flow_log_group.name}"
+  iam_role_arn   = "${aws_iam_role.iam_log_role.arn}"
+  vpc_id         = "${var.vpc_id}"
+}
