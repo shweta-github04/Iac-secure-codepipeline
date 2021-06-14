@@ -24,6 +24,35 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
+#............Network Interface............
+
+resource "aws_vpc" "my_vpc" {
+  cidr_block = "172.16.0.0/16"
+
+  tags = {
+    Name = "tf-example"
+  }
+}
+
+resource "aws_subnet" "my_subnet" {
+  vpc_id            = aws_vpc.my_vpc.id
+  cidr_block        = "172.16.10.0/24"
+  availability_zone = "us-west-2a"
+
+  tags = {
+    Name = "tf-example"
+  }
+}
+
+resource "aws_network_interface" "network_interface_ok" {
+  subnet_id   = aws_subnet.my_subnet.id
+  private_ips = ["172.16.10.100"]
+
+  tags = {
+    Name = "primary_network_interface"
+  }
+}
+
 #.............ubuntu server.................
 
 resource "aws_instance" "web" {
@@ -31,7 +60,10 @@ resource "aws_instance" "web" {
   ebs_optimized     = true
   monitoring        = true
   instance_type     = "t3.micro"
-  subnet_id         = "subnet-053cc94194e1b9125"
+  network_interface {
+    network_interface_id = aws_network_interface.network_interface_ok.id
+    device_index         = 0
+  }
   
   metadata_options {
      http_endpoint = "enabled"
