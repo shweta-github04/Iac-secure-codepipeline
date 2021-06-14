@@ -114,7 +114,7 @@ resource "aws_kms_key" "a" {
 resource "aws_cloudwatch_log_group" "flow_log_group" {
   name = "test"
   retention_in_days = 90
-  kms_key_id = aws_kms_key.a.id
+  kms_key_id = aws_kms_key.a.arn
 }
 
 resource "aws_default_security_group" "default" {
