@@ -91,13 +91,6 @@ resource "aws_security_group" "allow_tls" {
 resource "aws_default_security_group" "default" {
   vpc_id = aws_vpc.my_vpc.id
 
-  ingress {
-    protocol  = "tcp"
-    self      = true
-    from_port = 443
-    to_port   = 443
-  }
-
   egress {
     from_port   = 0
     to_port     = 0
