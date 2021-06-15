@@ -85,12 +85,6 @@ resource "aws_security_group" "allow_tls" {
   }
 }
 
-#..........default Security group.........
-
-resource "aws_default_security_group" "default" {
-  vpc_id = aws_vpc.my_vpc.id
-}
-
 resource "aws_instance" "web" {
   ami               = data.aws_ami.ubuntu.id
   ebs_optimized     = true
