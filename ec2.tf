@@ -8,6 +8,7 @@ provider "aws" {
 
 resource "aws_vpc" "my_vpc" {
   cidr_block = "172.16.0.0/16"
+  instance_tenancy = "default"
 
   tags = {
     Name = "tf-example"
@@ -83,6 +84,9 @@ resource "aws_security_group" "allow_tls" {
   tags = {
     Name = "allow_tls"
   }
+}
+resource "aws_default_security_group" "default" {
+  vpc_id = aws_vpc.my_vpc.id
 }
 
 resource "aws_instance" "web" {
