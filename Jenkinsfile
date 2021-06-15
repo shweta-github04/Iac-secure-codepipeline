@@ -27,16 +27,10 @@ pipeline {
                     sh 'sudo docker container run -t --rm -v $(pwd):/data wata727/tflint'
                 }
             }
-            stage('tf sec') {
-                when { expression { return params.Terraform == 'Apply'} }
-                steps {
-                    sh 'echo "sudo docker container run -t --rm -v "$(pwd):/src" liamg/tfsec /src"'
-                }
-            }
             stage('tf checkov') {
                 when { expression { return params.Terraform == 'Apply'} }
                 steps {
-                    sh 'sudo docker container run -t --rm -v "$(pwd):/tf" bridgecrew/checkov -d /tf'
+                    sh 'sudo docker container run -t --rm -v "$(pwd):/tf" bridgecrew/checkov -d /tf --skip-check CKV_AWS_158'
                 }
             }
             stage('tf plan') {
