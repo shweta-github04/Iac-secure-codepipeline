@@ -92,10 +92,10 @@ resource "aws_default_security_group" "default" {
   vpc_id = aws_vpc.my_vpc.id
 
   ingress {
-    protocol  = -1
+    protocol  = "tcp"
     self      = true
-    from_port = 0
-    to_port   = 0
+    from_port = 443
+    to_port   = 443
   }
 
   egress {
