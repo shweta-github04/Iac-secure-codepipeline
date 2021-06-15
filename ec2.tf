@@ -110,9 +110,6 @@ resource "aws_cloudwatch_log_group" "flow_log_group" {
   retention_in_days = 90
 }
 
-resource "aws_default_security_group" "default" {
-  vpc_id = aws_vpc.my_vpc.id
-}
 resource "aws_flow_log" "vpc_flow_log" {
   log_group_name = aws_cloudwatch_log_group.flow_log_group.name
   iam_role_arn   = aws_iam_role.iam_log_role.arn
