@@ -56,6 +56,9 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
+resource "aws_default_security_group" "default" {
+  vpc_id = aws_vpc.my_vpc.id
+}
 
 resource "aws_instance" "web" {
   ami               = data.aws_ami.ubuntu.id
