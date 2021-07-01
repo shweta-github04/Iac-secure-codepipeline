@@ -30,7 +30,7 @@ pipeline {
             stage('tf checkov') {
                 when { expression { return params.Terraform == 'Apply'} }
                 steps {
-                    sh 'sudo docker container run -t --rm -v "$(pwd):/tf" bridgecrew/checkov -d /tf --skip-check CKV_AWS_158'
+                    sh 'sudo docker container run -t --rm -v "$(pwd):/tf" bridgecrew/checkov -d /tf --skip-check CKV_AWS_158,CKV2_AWS_12'
                 }
             }
             stage('tf plan') {
