@@ -100,7 +100,7 @@ data "template_file" "log_policy" {
 }
 
 resource "aws_iam_role" "iam_log_role" {
-  name = "test"
+  name = "test1"
   assume_role_policy = data.template_file.assume_role_policy.rendered
 }
 
