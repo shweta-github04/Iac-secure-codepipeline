@@ -66,7 +66,7 @@ resource "aws_instance" "web" {
   ami               = data.aws_ami.ubuntu.id
   ebs_optimized     = true
   monitoring        = true
-  instance_type     = "t3.micro"
+  instance_type     = "t4.micro"
 
   network_interface {
     network_interface_id = aws_network_interface.network_interface_ok.id
