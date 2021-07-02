@@ -58,15 +58,15 @@ data "aws_ami" "ubuntu" {
 
 #..........default Security group.........
 
-resource "aws_default_security_group" "default" {
-  vpc_id = aws_vpc.my_vpc.id
-}
+#resource "aws_default_security_group" "default" {
+#  vpc_id = aws_vpc.my_vpc.id
+#}
 
 resource "aws_instance" "web" {
   ami               = data.aws_ami.ubuntu.id
   ebs_optimized     = true
   monitoring        = true
-  instance_type     = "t4.micro"
+  instance_type     = "t3.micro"
 
   network_interface {
     network_interface_id = aws_network_interface.network_interface_ok.id
